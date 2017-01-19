@@ -1,6 +1,17 @@
-package ru.alcereo.fUtils;
+package ru.alcereo.exoption;
 
-
-public interface Func<T,R, E extends Exception>{
-    R execute(T value) throws E;
+/**
+ * Функциональный интерфейс функции
+ * которая может вызвать исключение
+ *
+ * @param <PARAMETER>
+ *     Тип параметра
+ * @param <RETURN>
+ *     Тип результата
+ * @param <EXCEPTION>
+ *     Тип исключения
+ */
+@FunctionalInterface
+public interface Func<PARAMETER, RETURN, EXCEPTION extends Exception>{
+    RETURN execute(PARAMETER value) throws EXCEPTION;
 }

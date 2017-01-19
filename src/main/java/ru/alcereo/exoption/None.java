@@ -1,7 +1,7 @@
-package ru.alcereo.fUtils;
+package ru.alcereo.exoption;
 
 
-class None<T, Es extends Exception> extends Option<T, Es> {
+class None<TYPE, EXCEPTION extends Exception> extends Option<TYPE, EXCEPTION> {
 
     @Override
     public Option map(Func func){
@@ -19,7 +19,7 @@ class None<T, Es extends Exception> extends Option<T, Es> {
     }
 
     @Override
-    public T getOrElse(T valueElse) {
+    public TYPE getOrElse(TYPE valueElse) {
         return valueElse;
     }
 
@@ -29,8 +29,9 @@ class None<T, Es extends Exception> extends Option<T, Es> {
     }
 
     @Override
-    public <W extends Exception> Option<T,W> wrapNoneWithException(Exceptioned<W> exceptioned) {
-        return new ExcOpt<T,W>(exceptioned.getNewException(new NullPointerException()));
+    public <WRAPPED_EXCEPTION extends Exception> Option<TYPE, WRAPPED_EXCEPTION>
+    wrapNoneWithException(Exceptioned<WRAPPED_EXCEPTION> exceptioned) {
+        return new ExcOpt<>(exceptioned.getNewException(new NullPointerException()));
     }
 
     @Override

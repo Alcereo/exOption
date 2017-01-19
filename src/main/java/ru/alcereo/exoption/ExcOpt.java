@@ -1,11 +1,11 @@
-package ru.alcereo.fUtils;
-
+package ru.alcereo.exoption;
 
 import java.util.Arrays;
 
-public class ExcOpt<T, E extends Exception> extends Option<T,E> {
 
-    private final E e;
+public class ExcOpt<TYPE, EXCEPTION extends Exception> extends Option<TYPE,EXCEPTION> {
+
+    private final EXCEPTION exception;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -25,38 +25,33 @@ public class ExcOpt<T, E extends Exception> extends Option<T,E> {
     }
 
     @Override
-    public T getOrElse(T valueElse){
+    public TYPE getOrElse(TYPE valueElse){
         return valueElse;
     }
 
-    ExcOpt(E e) {
-        this.e = e;
+    ExcOpt(EXCEPTION exception) {
+        this.exception = exception;
     }
 
-    public Option throwException() throws E {
-        throw e;
+    public Option throwException() throws EXCEPTION {
+        throw exception;
     }
 
     @Override
-    public <W extends Throwable> Option<T, E> wrapAndTrowException(Exceptioned<W> exceptioned) throws W {
+    public <WRAPPED_EXCEPTION extends Throwable> Option<TYPE, EXCEPTION>
+    wrapAndTrowException(Exceptioned<WRAPPED_EXCEPTION> exceptioned) throws WRAPPED_EXCEPTION {
 
-//        try {
-        W t = exceptioned.getNewException(e);
+        WRAPPED_EXCEPTION t = exceptioned.getNewException(exception);
         StackTraceElement[] stackArr = t.getStackTrace();
         t.setStackTrace(Arrays.copyOfRange(stackArr,2,stackArr.length));
 
         throw t;
-//        } catch (InstantiationException | IllegalAccessException e) {
-//            e.printStackTrace();
-//        }
-
-        //Это опасность прям
-//        return null;
     }
 
     @Override
-    public <W extends Exception> Option<T, W> wrapException(Exceptioned<W> exceptioned) {
-        W t = exceptioned.getNewException(e);
+    public <WRAPPED_EXCEPTION extends Exception> Option<TYPE, WRAPPED_EXCEPTION>
+    wrapException(Exceptioned<WRAPPED_EXCEPTION> exceptioned) {
+        WRAPPED_EXCEPTION t = exceptioned.getNewException(exception);
         StackTraceElement[] stackArr = t.getStackTrace();
         t.setStackTrace(Arrays.copyOfRange(stackArr,2,stackArr.length));
 
@@ -80,6 +75,6 @@ public class ExcOpt<T, E extends Exception> extends Option<T,E> {
 
     @Override
     public String getExceptionMessage() {
-        return e.getMessage();
+        return exception.getMessage();
     }
 }

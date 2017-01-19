@@ -1,17 +1,17 @@
-package ru.alcereo.fUtils;
+package ru.alcereo.exoption;
 
 
-class Some<T, Es extends Exception> extends Option<T,Es> {
+class Some<TYPE, EXCEPTION extends Exception> extends Option<TYPE, EXCEPTION> {
 
-    private final T value;
+    private final TYPE value;
 
-    public Some(T value) {
+    public Some(TYPE value) {
         this.value = value;
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <R, E extends Exception> Option<R,E> map(Func<T, R, E> func){
+    public <R, E extends Exception> Option<R,E> map(Func<TYPE, R, E> func){
         try {
             return some(func.execute(value));
         } catch (Throwable e) {
@@ -21,7 +21,7 @@ class Some<T, Es extends Exception> extends Option<T,Es> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <R, E extends Exception> Option<R,E> flatMap(Func<T,Option<R,E>,E> func){
+    public <R, E extends Exception> Option<R,E> flatMap(Func<TYPE,Option<R,E>,E> func){
         try {
             return func.execute(value);
         } catch (Throwable e) {
@@ -31,10 +31,10 @@ class Some<T, Es extends Exception> extends Option<T,Es> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <E extends Exception> Option<T,E> filter(Func<T, Boolean, E> filterPredicate){
+    public <E extends Exception> Option<TYPE,E> filter(Func<TYPE, Boolean, E> filterPredicate){
         try {
             if (filterPredicate.execute(value))
-                return (Option<T, E>) this;
+                return (Option<TYPE, E>) this;
             else
                 return none();
         } catch (Throwable e) {
@@ -43,7 +43,7 @@ class Some<T, Es extends Exception> extends Option<T,Es> {
     }
 
     @Override
-    public T getOrElse(T valueElse) {
+    public TYPE getOrElse(TYPE valueElse) {
         return value;
     }
 

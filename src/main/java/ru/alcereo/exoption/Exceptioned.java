@@ -1,9 +1,11 @@
-package ru.alcereo.fUtils;
+package ru.alcereo.exoption;
 
 /**
- * Created by alcereo on 08.01.17.
+ * Функциональный интерфейс функции оборачивания
+ * исключения в свой тип исключения
+ * @param <EXCEPTION>
  */
 @FunctionalInterface
-public interface Exceptioned<E extends Throwable> {
-        E getNewException(Throwable cause);
+public interface Exceptioned<EXCEPTION extends Throwable> {
+        EXCEPTION getNewException(Throwable cause);
 }

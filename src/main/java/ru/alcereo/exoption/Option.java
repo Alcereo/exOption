@@ -1,29 +1,29 @@
-package ru.alcereo.fUtils;
+package ru.alcereo.exoption;
 
 
 /**
  * Монада для хранения значений
- * @param <T>
+ * @param <TYPE>
  */
-public abstract class Option<T, Es extends Exception> {
+public abstract class Option<TYPE, EXCEPTION extends Exception> {
 
     public static final None NONE = new None();
 
-    public abstract <R, E extends Exception> Option<R,E>    map(Func<T,R,E> func);
+    public abstract <R, E extends Exception> Option<R,E>    map(Func<TYPE,R,E> func);
 
-    public abstract <R, E extends Exception> Option<R,E>    flatMap(Func<T,Option<R,E>,E> func);
+    public abstract <R, E extends Exception> Option<R,E>    flatMap(Func<TYPE,Option<R,E>,E> func);
 
-    public abstract <E extends Exception> Option<T,E>       filter(Func<T, Boolean, E> filterPredicate);
+    public abstract <E extends Exception> Option<TYPE,E>       filter(Func<TYPE, Boolean, E> filterPredicate);
 
-    public abstract T getOrElse(T valueElse);
+    public abstract TYPE getOrElse(TYPE valueElse);
 
-    public abstract Option<T,Es> throwException() throws Es;
+    public abstract Option<TYPE, EXCEPTION> throwException() throws EXCEPTION;
 
-    public abstract <W extends Throwable> Option<T,Es> wrapAndTrowException(Exceptioned<W> exceptioned) throws W;
+    public abstract <W extends Throwable> Option<TYPE, EXCEPTION> wrapAndTrowException(Exceptioned<W> exceptioned) throws W;
 
-    public abstract <W extends Exception> Option<T,W> wrapException(Exceptioned<W> exceptioned);
+    public abstract <W extends Exception> Option<TYPE,W> wrapException(Exceptioned<W> exceptioned);
 
-    public abstract <W extends Exception> Option<T,W> wrapNoneWithException(Exceptioned<W> exceptioned);
+    public abstract <W extends Exception> Option<TYPE,W> wrapNoneWithException(Exceptioned<W> exceptioned);
 
     public abstract boolean isException();
 
