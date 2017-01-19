@@ -1,0 +1,17 @@
+group 'ru.alcereo'
+version '0.1'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    compile "org.slf4j:slf4j-api:1.7.21"
+    compile "org.slf4j:slf4j-log4j12:1.7.21"
+}
