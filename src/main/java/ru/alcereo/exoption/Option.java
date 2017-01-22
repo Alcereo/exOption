@@ -61,13 +61,13 @@ public abstract class Option<TYPE, EXCEPTION extends Exception> {
         try{
             return some(func.get());
         } catch (Exception e) {
-            return new ExcOpt<R, E>((E)e);
+            return new ExcOpt<>((E)e);
         }
     }
 
     public static <R> Option<R, NullPointerException> asNotNullWithExceptionOption(R value){
         if (value == null)
-            return new ExcOpt<R, NullPointerException>(new NullPointerException());
+            return new ExcOpt<>(new NullPointerException());
         else
             return some(value);
     }
