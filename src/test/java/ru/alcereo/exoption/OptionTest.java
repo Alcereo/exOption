@@ -1,11 +1,7 @@
 package ru.alcereo.exoption;
 
-
-import org.junit.Assert;
 import org.junit.Test;
-
 import java.util.Random;
-import java.util.concurrent.locks.Condition;
 
 import static org.junit.Assert.*;
 
