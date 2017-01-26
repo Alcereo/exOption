@@ -1,7 +1,11 @@
 package ru.alcereo.exoption;
 
 
-class None<TYPE, EXCEPTION extends Exception> extends Option<TYPE, EXCEPTION> {
+import java.io.Serializable;
+
+class None<TYPE, EXCEPTION extends Exception> extends Option<TYPE, EXCEPTION> implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     @Override
     public Option map(Func func){

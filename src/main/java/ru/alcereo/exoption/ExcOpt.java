@@ -1,9 +1,12 @@
 package ru.alcereo.exoption;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 
-public class ExcOpt<TYPE, EXCEPTION extends Exception> extends Option<TYPE,EXCEPTION> {
+public class ExcOpt<TYPE, EXCEPTION extends Exception> extends Option<TYPE,EXCEPTION> implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     private final EXCEPTION exception;
 
