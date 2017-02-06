@@ -17,6 +17,9 @@ public abstract class Option<TYPE, EXCEPTION extends Exception> {
 
     public abstract <E extends Exception> Option<TYPE,E> filter(Func<TYPE, Boolean, E> filterPredicate);
 
+    /**
+     * @deprecated
+     */
     public abstract TYPE getOrElse(TYPE valueElse);
 
     /**
@@ -65,7 +68,7 @@ public abstract class Option<TYPE, EXCEPTION extends Exception> {
     }
 
     public static <R,E extends Exception> Option<R,E> asException(E e){
-        return new ExcOpt<R,E>(e);
+        return new ExcOpt<>(e);
     }
 
     @SuppressWarnings("unchecked")

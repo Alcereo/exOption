@@ -1,6 +1,7 @@
-package ru.alcereo.exoption;
-
+import org.junit.Assert;
 import org.junit.Test;
+import ru.alcereo.exoption.Option;
+
 import java.util.Random;
 import java.util.function.Function;
 
@@ -14,7 +15,7 @@ public class OptionTest {
 
     @Test
     public void map(){
-        assertEquals(
+        Assert.assertEquals(
                 Option.asOption(randValue)
                         .map(i -> i*2)
                         .map(i -> "a"+i)
