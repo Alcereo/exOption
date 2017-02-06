@@ -2,6 +2,7 @@ package ru.alcereo.exoption;
 
 import org.junit.Test;
 import java.util.Random;
+import java.util.function.Function;
 
 import static org.junit.Assert.*;
 
@@ -67,7 +68,37 @@ public class OptionTest {
     }
 
     @Test
-    public void wrapAndThrowException() throws ConcreteException{
+    public void getOrElseWithExc(){
+        assertEquals(
+                Option
+                .asOption(randValue)
+                .getOrElseWithExc(
+                        e -> null,
+                        null
+                ),
+                randValue
+        );
+
+        assertEquals(
+                Option
+                .asException(new Exception())
+                .getOrElseWithExc(
+                        e -> randValue,
+                        null
+                        ),
+                randValue
+        );
+
+        assertEquals(
+                Option
+                .asOption(() -> null)
+                .getOrElseWithExc(
+                        e -> null,
+                        randValue
+                ),
+                randValue
+        );
+
     }
 
 }

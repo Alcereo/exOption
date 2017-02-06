@@ -1,6 +1,8 @@
 package ru.alcereo.exoption;
 
 
+import java.util.function.Function;
+
 /**
  * Монада для хранения значений
  * @param <TYPE>
@@ -9,13 +11,36 @@ public abstract class Option<TYPE, EXCEPTION extends Exception> {
 
     public static final None NONE = new None();
 
-    public abstract <R, E extends Exception> Option<R,E>    map(Func<TYPE,R,E> func);
+    public abstract <R, E extends Exception> Option<R,E> map(Func<TYPE,R,E> func);
 
-    public abstract <R, E extends Exception> Option<R,E>    flatMap(Func<TYPE,Option<R,E>,E> func);
+    public abstract <R, E extends Exception> Option<R,E> flatMap(Func<TYPE,Option<R,E>,E> func);
 
-    public abstract <E extends Exception> Option<TYPE,E>       filter(Func<TYPE, Boolean, E> filterPredicate);
+    public abstract <E extends Exception> Option<TYPE,E> filter(Func<TYPE, Boolean, E> filterPredicate);
 
     public abstract TYPE getOrElse(TYPE valueElse);
+
+    /**
+     * Получение содержания <code>Option-а</code>
+     * @param function
+     *  Функция применяемая к содержанию, для возврата, в случае, когда
+     *  внутри содержится исключение - {@link ExcOpt}
+     * @param valueIfNone
+     *  Значение, возвращаемое, если внутри содержится {@link None}
+     * @return
+     *  Возвращает хранимое значение:
+     *  <ul>
+     *      <li>
+     *          Eсли содержится значение, то это значение
+     *      </li>
+     *      <li>
+     *          Eсли внутри исключение, тогда применяет функцию и возращает резульат
+     *      </li>
+     *      <li>
+     *          если внутри {@link None}, возвращает указанный параметр
+     *      </li>
+     *  </ul>
+     */
+    public abstract TYPE getOrElseWithExc(Function<EXCEPTION, TYPE> function, TYPE valueIfNone);
 
     public abstract Option<TYPE, EXCEPTION> throwException() throws EXCEPTION;
 

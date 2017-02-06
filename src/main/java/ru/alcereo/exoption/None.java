@@ -2,6 +2,7 @@ package ru.alcereo.exoption;
 
 
 import java.io.Serializable;
+import java.util.function.Function;
 
 class None<TYPE, EXCEPTION extends Exception> extends Option<TYPE, EXCEPTION> implements Serializable{
 
@@ -25,6 +26,11 @@ class None<TYPE, EXCEPTION extends Exception> extends Option<TYPE, EXCEPTION> im
     @Override
     public TYPE getOrElse(TYPE valueElse) {
         return valueElse;
+    }
+
+    @Override
+    public TYPE getOrElseWithExc(Function<EXCEPTION, TYPE> function, TYPE valueIfNone) {
+        return valueIfNone;
     }
 
     @Override
